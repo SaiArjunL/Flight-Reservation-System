@@ -2,6 +2,9 @@ package com.FRS;
 
 public class PassengerRegistration {
 
+    private static int idCounter;
+    private int id;
+
     private static class Address {
         String street, city, state;
 
@@ -11,29 +14,6 @@ public class PassengerRegistration {
             this.state = state;
         }
 
-        public String getStreet(){
-            return this.street;
-        }
-
-        public void updateStreet(String street){
-            this.street = street;
-        }
-
-        public String getCity(){
-            return this.city;
-        }
-
-        public void updateCity(String city){
-            this.city = city;
-        }
-
-        public String getState(){
-            return this.state;
-        }
-
-        public void updateState(String state){
-            this.state = state;
-        }
     }
     private Address address;
 
@@ -46,37 +26,19 @@ public class PassengerRegistration {
             this.email = email;
         }
 
-        public String getName(){
-            return this.name;
-        }
-
-        public void updateName(String name){
-            this.name = name;
-        }
-
-        public String getPhone(){
-            return this.phone;
-        }
-
-        public void updatePhone(String phone){
-            this.phone = phone;
-        }
-
-        public String getEmail(){
-            return this.email;
-        }
-
-        public void updateEmail(String email){
-            this.email = email;
-        }
     }
     private Contact contact;
 
     public PassengerRegistration(String addressStreet, String addressCity, String addressState,
                                  String contactName, String contactPhone, String contactEmail){
 
+        this.id = idCounter++;
         this.address = new Address(addressStreet, addressCity, addressState);
         this.contact = new Contact(contactName, contactPhone, contactEmail);
+    }
+
+    public int getPassengerCount(){
+        return this.id;
     }
 
     public String getAddressDetails() {
