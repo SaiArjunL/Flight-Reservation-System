@@ -9,7 +9,7 @@ public class Main {
 
         Flight flight = new Flight();
 
-        PassengerRegistration passenger = new PassengerRegistration("Periyaar Street",
+        PassengerRegistration passenger = new PassengerRegistration("Periyar Street",
                 "Chennai","Tamil Nadu",
                 "Ladeela Sai Arjun", "8639953455", "lsaarjun@gmail.com");
 
