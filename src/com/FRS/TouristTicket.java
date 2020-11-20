@@ -17,9 +17,10 @@ public class TouristTicket extends BookingTicket {
     private TouristLocations touristLocations;
 
     public TouristTicket(Flight flightDetails, PassengerRegistration passengerDetails,
+                         String departureLocation, String destinationLocation,
                          String[] touristLocations, String hotelAddress){
 
-        super(flightDetails, passengerDetails, 987654321);
+        super(flightDetails, passengerDetails, departureLocation, destinationLocation);
         this.touristLocations = new TouristLocations(touristLocations);
         this.hotelAddress = hotelAddress;
 

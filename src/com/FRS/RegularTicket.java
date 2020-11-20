@@ -2,6 +2,8 @@ package com.FRS;
 
 public class RegularTicket extends BookingTicket {
 
+    private String departureLocation;
+    private String destinationLocation;
 
 
     private static class SpecialServiceRequest{
@@ -17,9 +19,11 @@ public class RegularTicket extends BookingTicket {
 
     private SpecialServiceRequest specialServices;
 
-    public RegularTicket(Flight flightDetails, PassengerRegistration passengerDetails,
+    public RegularTicket(Flight flightDetails, PassengerRegistration passengerDetails, String departureLocation, String destinationLocation,
                          boolean food, boolean water, boolean snacks) {
-        super(flightDetails, passengerDetails, 123456789);
+        super(flightDetails, passengerDetails, departureLocation, destinationLocation);
+        this.departureLocation = departureLocation;
+        this.destinationLocation = destinationLocation;
         this.specialServices = new SpecialServiceRequest(food, water, snacks);
     }
 

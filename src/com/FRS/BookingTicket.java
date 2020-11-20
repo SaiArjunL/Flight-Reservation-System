@@ -1,4 +1,5 @@
 package com.FRS;
+import java.text.DecimalFormat;
 
 public class BookingTicket {
 
@@ -9,22 +10,28 @@ public class BookingTicket {
 
     private Flight flightDetails;
     private PassengerRegistration passengerDetails;
-    private String typeOfTicket;
     private SeatMap seatNumber;
 
     enum TicketStatus{
         PENDING,
         CONFIRMED,
-        REJECTED
+        CANCELLED;
     }
 
-    TicketStatus status;
+    TicketStatus ticketStatus = TicketStatus.PENDING;
 
 
-    public BookingTicket(Flight flightDetails, PassengerRegistration passengerDetails, long PNRNumber){
+    public BookingTicket(Flight flightDetails, PassengerRegistration passengerDetails, String origin, String destination){
         this.flightDetails = flightDetails;
         this.passengerDetails = passengerDetails;
-        this.PNRNumber = PNRNumber;
+        this.ticketPrice = flightDetails.getTicketPrice();
+        this.departureLocation = origin;
+        this.destinationLocation = destination;
+        validateOriginAndDestination();
+    }
+
+    public long generatePNRNumber(){
+        return  (int) ((Math.random() * (999999 - 100000)) + 100000);
     }
 
     public long getPNRNumber() {
@@ -43,12 +50,8 @@ public class BookingTicket {
         return ticketPrice;
     }
 
-    public String getTypeOfTicket() {
-        return typeOfTicket;
-    }
-
     public TicketStatus getStatus() {
-        return status;
+        return this.ticketStatus;
     }
 
     public void setPNRNumber(long PNRNumber) {
@@ -67,11 +70,40 @@ public class BookingTicket {
         this.ticketPrice = ticketPrice;
     }
 
-    public void setTypeOfTicket(String typeOfTicket) {
-        this.typeOfTicket = typeOfTicket;
+    public void updatePassengerCredit() {
+
+        if(this.passengerDetails.checkDue() <= 0.0f){
+            this.ticketStatus = TicketStatus.CANCELLED;
+        }
+        else{
+            this.ticketStatus = TicketStatus.CONFIRMED;
+
+            float temp = this.passengerDetails.checkDue()
+                    - flightDetails.getTicketPrice() * passengerDetails.getPassengerCount();
+
+            this.passengerDetails.setCredit(temp);
+        }
     }
 
-    public void setStatus(TicketStatus status) {
-        this.status = status;
+    public void validateOriginAndDestination(){
+        boolean flag1 = false, flag2 = false;
+        for(int i = 0; i < flightDetails.getOrigin().length; i++){
+            if(this.departureLocation.equals(flightDetails.getOrigin()[i]))
+                    flag1 = true;
+        }
+
+        for(int i = 0; i < flightDetails.getDestination().length; i++){
+            if(this.destinationLocation.equals((flightDetails.getDestination()[i])))
+                flag2 = true;
+        }
+
+        if(flag1 && flag2){
+            this.PNRNumber = generatePNRNumber();
+            updatePassengerCredit();
+        }
+        else{
+            System.out.println("Please check the available locations..");
+        }
     }
+
 }
