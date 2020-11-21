@@ -1,37 +1,58 @@
 package com.FRS;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class TouristTicket extends BookingTicket {
 
     private String hotelAddress;
 
-    private static class TouristLocations{
+    public TouristTicket(Flight flightDetails, PassengerRegistration passengerDetails,
+                         SeatMap seatMap, String location1, String location2,
+                         String location3, String location4, String location5,
+                         String origin, String hotelAddress){
 
-        String[] locationArray = new String[5];
+        super(flightDetails, passengerDetails, seatMap);
+        departureLocation = origin;
+        destinationLocation = origin;
+        this.hotelAddress = hotelAddress;
+       // assert false;
+        selectedLocations.addAll(Arrays.asList(location1, location2, location3,
+                    location4, location5));
+        validateOriginAndDestination();
 
-        public TouristLocations(String[] locationArray){
-            this.locationArray = locationArray;
+        if(origin.equals("Australia") || origin.equals("New Zealand") || origin.equals("Singapore"))
+            flightNumber = flightDetails.getFlightNumber()[0];
+        else
+            flightNumber = flightDetails.getFlightNumber()[1];
+
+    }
+
+    public void addTouristLocation(String newLocation){
+        if(selectedLocations.size() >= 5){
+            System.out.println("You cannot add more than 5 locations");
+        }else {
+            selectedLocations.add(newLocation);
+        }
         }
 
+    public void removeTouristLocations(String location){
+        selectedLocations.remove(location);
     }
 
-    private TouristLocations touristLocations;
-
-    public TouristTicket(Flight flightDetails, PassengerRegistration passengerDetails,
-                         String departureLocation, String destinationLocation,
-                         String[] touristLocations, String hotelAddress){
-
-        super(flightDetails, passengerDetails, departureLocation, destinationLocation);
-        this.touristLocations = new TouristLocations(touristLocations);
-        this.hotelAddress = hotelAddress;
-
+    public String getDepartureLocation() {
+        return super.departureLocation;
     }
 
-    public void addTouristLocation(){
-
+    public String getDestinationLocation(){
+        return super.destinationLocation;
     }
 
-    public void removeTouristLocations(){
-
+    public ArrayList<String> getSelectedLocations(){
+        return super.selectedLocations;
     }
 
+    public String getHotelAddress(){
+        return hotelAddress;
+    }
 }

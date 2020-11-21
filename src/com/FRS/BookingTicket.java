@@ -1,16 +1,23 @@
 package com.FRS;
-import java.text.DecimalFormat;
+import java.time.Duration;
+import java.util.ArrayList;
 
-public class BookingTicket {
+public abstract class BookingTicket {
 
     private long PNRNumber;
-    private String departureLocation;
-    private String destinationLocation;
+    protected String departureLocation;
+    protected String destinationLocation;
     private float ticketPrice;
+    protected final String dateAndTimeOfDeparture;
+    protected String dateAndTimeOfArrival;
+    private String seatNumber;
+    protected int flightNumber;
+    protected ArrayList<String> selectedLocations = new ArrayList<>();
 
-    private Flight flightDetails;
-    private PassengerRegistration passengerDetails;
-    private SeatMap seatNumber;
+    protected final Flight flightDetails;
+    private final PassengerRegistration passengerDetails;
+    private final SeatMap seatMap;
+
 
     enum TicketStatus{
         PENDING,
@@ -21,29 +28,36 @@ public class BookingTicket {
     TicketStatus ticketStatus = TicketStatus.PENDING;
 
 
-    public BookingTicket(Flight flightDetails, PassengerRegistration passengerDetails, String origin, String destination){
+    public BookingTicket(Flight flightDetails, PassengerRegistration passengerDetails, SeatMap seatMap){
         this.flightDetails = flightDetails;
         this.passengerDetails = passengerDetails;
-        this.ticketPrice = flightDetails.getTicketPrice();
-        this.departureLocation = origin;
-        this.destinationLocation = destination;
-        validateOriginAndDestination();
+        this.seatMap = seatMap;
+        setTicketPrice(flightDetails.getTicketPrice());
+        this.dateAndTimeOfDeparture = flightDetails.getDateAndTimeOfDeparture();
+        this.dateAndTimeOfArrival = flightDetails.getDateAndTimeOfArrival();
+        setSeatNumber();
     }
 
     public long generatePNRNumber(){
         return  (int) ((Math.random() * (999999 - 100000)) + 100000);
     }
 
+    public abstract String getDepartureLocation();
+
+    public abstract String getDestinationLocation();
+
+    public abstract ArrayList<String> getSelectedLocations();
+
     public long getPNRNumber() {
         return PNRNumber;
     }
 
-    public String getDepartureLocation() {
-        return departureLocation;
+    private void setSeatNumber(){
+        this.seatNumber = seatMap.getSeatNumber();
     }
 
-    public String getDestinationLocation() {
-        return destinationLocation;
+    public void setTicketPrice(float ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 
     public float getTicketPrice() {
@@ -54,20 +68,12 @@ public class BookingTicket {
         return this.ticketStatus;
     }
 
-    public void setPNRNumber(long PNRNumber) {
-        this.PNRNumber = PNRNumber;
-    }
-
     public void setDepartureLocation(String departureLocation) {
         this.departureLocation = departureLocation;
     }
 
     public void setDestinationLocation(String destinationLocation) {
         this.destinationLocation = destinationLocation;
-    }
-
-    public void setTicketPrice(float ticketPrice) {
-        this.ticketPrice = ticketPrice;
     }
 
     public void updatePassengerCredit() {
@@ -86,7 +92,9 @@ public class BookingTicket {
     }
 
     public void validateOriginAndDestination(){
+
         boolean flag1 = false, flag2 = false;
+
         for(int i = 0; i < flightDetails.getOrigin().length; i++){
             if(this.departureLocation.equals(flightDetails.getOrigin()[i]))
                     flag1 = true;
@@ -104,6 +112,33 @@ public class BookingTicket {
         else{
             System.out.println("Please check the available locations..");
         }
+    }
+
+    public String getDuration(){
+        Duration duration = Duration.between(flightDetails.dateAndTimeOfDeparture,
+                flightDetails.dateAndTimeOfArrival);
+        return "" + Math.abs(duration.toHoursPart()) + " Hours and " +  Math.abs(duration.toMinutesPart()) + " Minutes";
+    }
+
+    public void cancelTicket(){
+        this.ticketStatus = TicketStatus.CANCELLED;
+        this.seatMap.updateAvailableSeats();
+    }
+
+    public String getDateAndTimeOfDeparture(){
+        return this.dateAndTimeOfDeparture;
+    }
+
+    public String getDateAndTimeOfArrival(){
+        return this.dateAndTimeOfArrival;
+    }
+
+    public String getSeatNumber(){
+        return this.seatNumber;
+    }
+
+    public int getFlightNumber(){
+        return this.flightNumber;
     }
 
 }

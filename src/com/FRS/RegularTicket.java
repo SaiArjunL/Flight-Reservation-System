@@ -1,9 +1,8 @@
 package com.FRS;
 
-public class RegularTicket extends BookingTicket {
+import java.util.ArrayList;
 
-    private String departureLocation;
-    private String destinationLocation;
+public class RegularTicket extends BookingTicket {
 
 
     private static class SpecialServiceRequest{
@@ -19,14 +18,32 @@ public class RegularTicket extends BookingTicket {
 
     private SpecialServiceRequest specialServices;
 
-    public RegularTicket(Flight flightDetails, PassengerRegistration passengerDetails, String departureLocation, String destinationLocation,
+    public RegularTicket(Flight flightDetails, PassengerRegistration passengerDetails,
+                         SeatMap seatMap, String departureLocation, String destinationLocation,
                          boolean food, boolean water, boolean snacks) {
-        super(flightDetails, passengerDetails, departureLocation, destinationLocation);
-        this.departureLocation = departureLocation;
-        this.destinationLocation = destinationLocation;
-        this.specialServices = new SpecialServiceRequest(food, water, snacks);
+        super(flightDetails, passengerDetails, seatMap);
+        super.departureLocation = departureLocation;
+        super.destinationLocation = destinationLocation;
+        specialServices = new SpecialServiceRequest(food, water, snacks);
+        super.validateOriginAndDestination();
+
+        if(departureLocation.equals("Australia") || departureLocation.equals("New Zealand") || departureLocation.equals("Singapore"))
+            super.flightNumber = flightDetails.getFlightNumber()[0];
+        else
+            super.flightNumber = flightDetails.getFlightNumber()[1];
     }
 
+    public String getDepartureLocation(){
+        return super.departureLocation;
+    }
 
+    public String getDestinationLocation(){
+        return super.destinationLocation;
+    }
+
+    public ArrayList<String> getSelectedLocations(){
+        super.selectedLocations.clear();
+        return selectedLocations;
+    }
 
 }

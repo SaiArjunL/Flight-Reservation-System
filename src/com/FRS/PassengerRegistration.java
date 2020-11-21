@@ -16,7 +16,7 @@ public class PassengerRegistration {
         }
 
     }
-    private Address address;
+    private final Address address;
 
     private static class Contact {
         String name, phone, email;
@@ -28,7 +28,7 @@ public class PassengerRegistration {
         }
 
     }
-    private Contact contact;
+    private final Contact contact;
 
     public PassengerRegistration(String addressStreet, String addressCity, String addressState,
                                  String contactName, String contactPhone, String contactEmail, float creditMoney){

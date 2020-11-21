@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class SeatMap {
 
-    private ArrayList<String> allSeats = new ArrayList<>();
+    private final ArrayList<String> allSeats = new ArrayList<>();
     private final int totalNumberOfSeats;
     private int availableSeats;
     private String seatNumber;
@@ -18,6 +18,10 @@ public class SeatMap {
         return this.availableSeats;
     }
 
+    public void updateAvailableSeats(){
+        this.availableSeats++;
+    }
+
     public int getTotalNumberOfSeats(){
         return this.totalNumberOfSeats;
     }
@@ -25,7 +29,6 @@ public class SeatMap {
     public void generateSeatNumber(){
 
         String temp1 = Integer.toString(getRandomRow( this.totalNumberOfSeats / (this.totalNumberOfSeats / 10)));
-
         String temp2 = String.valueOf(getRandomColumn(totalNumberOfSeats / 10));
 
         this.seatNumber = temp1 + temp2;
@@ -38,8 +41,6 @@ public class SeatMap {
         }
 
         allSeats.add(this.seatNumber);
-        System.out.println("Seat Number: " + this.seatNumber);
-
         this.availableSeats--;
     }
 
@@ -50,6 +51,11 @@ public class SeatMap {
     private char getRandomColumn(int numberOfColumns){
         Random rnd = new Random();
         return (char) ('A' + rnd.nextInt(numberOfColumns));
+    }
+
+    public String getSeatNumber(){
+        generateSeatNumber();
+        return this.seatNumber;
     }
 
 }
