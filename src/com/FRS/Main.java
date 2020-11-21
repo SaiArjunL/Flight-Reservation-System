@@ -11,7 +11,7 @@ public class Main {
         LocalDateTime arrivalDateAndTime = LocalDateTime.of(2021, 1, 12, 12, 50);
 
 
-        String[] locations = {"Australia", "New Zealand", "Andaman and Nicobar Islands", "Singapore", "Switzerland"};
+        String[] locations = {"India", "Australia", "New Zealand", "Andaman and Nicobar Islands", "Singapore", "Switzerland"};
 
         int[] flightNumbers = {1001, 1002};
 
@@ -28,15 +28,22 @@ public class Main {
         printPassengerDetails(passenger);
         printWalletAmount(passenger);
 
-        BookingTicket bookingTicket1 = bookRegularTicket(flight, passenger, seatMap);
+        RegularTicket bookingTicket1 = bookRegularTicket(flight, passenger, seatMap);
         printRegularTicketDetails(bookingTicket1);
+//        printTicketDetails(bookingTicket1);
         printWalletAmount(passenger);
         System.out.println();
-        BookingTicket bookingTicket2 = bookTouristTicket(flight, passenger, seatMap);
+        TouristTicket bookingTicket2 = bookTouristTicket(flight, passenger, seatMap);
         printTouristTicketDetails(bookingTicket2);
+//        printTicketDetails(bookingTicket2);
         printWalletAmount(passenger);
-        //cancelTicket(bookingTicket);
+        cancelTicket(bookingTicket1);
+        printWalletAmount(passenger);
 
+    }
+
+    public static void printTicketDetails(BookingTicket ticket){
+        System.out.println("PNR Number is: " + ticket.getPNRNumber());
     }
 
     public static void printPassengerDetails(PassengerRegistration passenger){
@@ -51,11 +58,12 @@ public class Main {
         System.out.println("Your Wallet Amount: ₹ " + passenger.checkDue());
     }
 
-    public static void printRegularTicketDetails(BookingTicket ticket){
+    public static void printRegularTicketDetails(RegularTicket ticket){
 
         if(ticket.getClass().getSimpleName().equals("RegularTicket")){
             System.out.print("Your Ticket from " + ticket.getDepartureLocation());
             System.out.println(" to " + ticket.getDestinationLocation() + " is " + ticket.getStatus() + "\n");
+            System.out.println("Ticket Type: " + ticket.getTypeOfTicket() + "\n");
             System.out.println("Flight Number: " + ticket.getFlightNumber());
             System.out.print("Departure Date & Time: " + ticket.getDateAndTimeOfDeparture());
             System.out.println("\t\tArrival Date & Time: " + ticket.getDateAndTimeOfArrival());
@@ -69,16 +77,18 @@ public class Main {
 
     }
 
-    public static void printTouristTicketDetails(BookingTicket ticket){
+    public static void printTouristTicketDetails(TouristTicket ticket){
 
         if(ticket.getClass().getSimpleName().equals("TouristTicket")){
             System.out.println("Your Tourist Ticket from " + ticket.getDestinationLocation() + " is " + ticket.getStatus());
+            System.out.println("Ticket Type: " + ticket.getTypeOfTicket() + "\n");
             System.out.println("Flight Number: " + ticket.getFlightNumber());
             System.out.print("Departure Date & Time: " + ticket.getDateAndTimeOfDeparture());
             System.out.println("\nYour Selected Locations are: ");
             for(String location:ticket.getSelectedLocations())
                 System.out.println(location);
-            System.out.println("PNR Number: " + ticket.getPNRNumber());
+            System.out.println("\nHotel Address: " + ticket.getHotelAddress());
+            System.out.println("\nPNR Number: " + ticket.getPNRNumber());
             System.out.println("Your Seat Number is: " + ticket.getSeatNumber());
             System.out.println("Ticket Status: " + ticket.getStatus());
             System.out.println("Ticket Price: ₹ " + ticket.getTicketPrice());
@@ -86,20 +96,20 @@ public class Main {
         }
     }
 
-    public static BookingTicket bookRegularTicket(Flight flight, PassengerRegistration passenger, SeatMap seatMap){
+    public static RegularTicket bookRegularTicket(Flight flight, PassengerRegistration passenger, SeatMap seatMap){
 
         return new RegularTicket(flight, passenger, seatMap,"Australia", "New Zealand",
                 true, true, true);
     }
 
-    public static BookingTicket bookTouristTicket(Flight flight, PassengerRegistration passenger, SeatMap seatMap){
+    public static TouristTicket bookTouristTicket(Flight flight, PassengerRegistration passenger, SeatMap seatMap){
 
         return new TouristTicket(flight, passenger, seatMap, "Australia", "Thailand", "Andaman and Nicobar Islands",
-                "Singapore", "Switzerland", "Australia", "Country street, Country");
+                "Singapore", "Switzerland", "India", "Country street, Country");
     }
 
     public static void cancelTicket(BookingTicket ticket){
         ticket.cancelTicket();
-        System.out.println("YOUR TICKET HAS BEEN "+ ticket.getStatus() +"!!!!");
+        System.out.println("YOUR " + ticket.getTypeOfTicket().toUpperCase() + " HAS BEEN "+ ticket.getStatus() +"!!!!");
     }
 }

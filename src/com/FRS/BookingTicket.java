@@ -1,6 +1,5 @@
 package com.FRS;
 import java.time.Duration;
-import java.util.ArrayList;
 
 public abstract class BookingTicket {
 
@@ -12,7 +11,7 @@ public abstract class BookingTicket {
     protected String dateAndTimeOfArrival;
     private String seatNumber;
     protected int flightNumber;
-    protected ArrayList<String> selectedLocations = new ArrayList<>();
+    protected String typeOfTicket;
 
     protected final Flight flightDetails;
     private final PassengerRegistration passengerDetails;
@@ -46,7 +45,7 @@ public abstract class BookingTicket {
 
     public abstract String getDestinationLocation();
 
-    public abstract ArrayList<String> getSelectedLocations();
+    public abstract String getTypeOfTicket();
 
     public long getPNRNumber() {
         return PNRNumber;
@@ -68,6 +67,10 @@ public abstract class BookingTicket {
         return this.ticketStatus;
     }
 
+    public void updateStatus(TicketStatus status){
+        this.ticketStatus = status;
+    }
+
     public void setDepartureLocation(String departureLocation) {
         this.departureLocation = departureLocation;
     }
@@ -76,13 +79,13 @@ public abstract class BookingTicket {
         this.destinationLocation = destinationLocation;
     }
 
-    public void updatePassengerCredit() {
+    public void debitPassengerWallet() {
 
         if(this.passengerDetails.checkDue() <= 0.0f){
-            this.ticketStatus = TicketStatus.CANCELLED;
+            updateStatus(TicketStatus.CANCELLED);
         }
         else{
-            this.ticketStatus = TicketStatus.CONFIRMED;
+            updateStatus(TicketStatus.CONFIRMED);
 
             float temp = this.passengerDetails.checkDue()
                     - flightDetails.getTicketPrice() * passengerDetails.getPassengerCount();
@@ -107,7 +110,7 @@ public abstract class BookingTicket {
 
         if(flag1 && flag2){
             this.PNRNumber = generatePNRNumber();
-            updatePassengerCredit();
+            debitPassengerWallet();
         }
         else{
             System.out.println("Please check the available locations..");
@@ -123,6 +126,7 @@ public abstract class BookingTicket {
     public void cancelTicket(){
         this.ticketStatus = TicketStatus.CANCELLED;
         this.seatMap.updateAvailableSeats();
+       passengerDetails.addCredit(flightDetails.getTicketPrice());
     }
 
     public String getDateAndTimeOfDeparture(){

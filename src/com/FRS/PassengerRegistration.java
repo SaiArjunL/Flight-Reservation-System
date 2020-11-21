@@ -56,6 +56,10 @@ public class PassengerRegistration {
         this.credit = updatedCredit;
     }
 
+    public void addCredit(float updatedCredit){
+        this.credit = this.credit + updatedCredit;
+    }
+
     public float checkDue(){
 
         return (float)Math.floor((this.credit * 100) / 100);

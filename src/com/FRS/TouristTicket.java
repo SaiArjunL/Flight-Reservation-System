@@ -6,6 +6,7 @@ import java.util.Arrays;
 public class TouristTicket extends BookingTicket {
 
     private String hotelAddress;
+    private ArrayList<String> selectedLocations = new ArrayList<>();
 
     public TouristTicket(Flight flightDetails, PassengerRegistration passengerDetails,
                          SeatMap seatMap, String location1, String location2,
@@ -20,6 +21,7 @@ public class TouristTicket extends BookingTicket {
         selectedLocations.addAll(Arrays.asList(location1, location2, location3,
                     location4, location5));
         validateOriginAndDestination();
+        typeOfTicket = "Tourist Ticket";
 
         if(origin.equals("Australia") || origin.equals("New Zealand") || origin.equals("Singapore"))
             flightNumber = flightDetails.getFlightNumber()[0];
@@ -49,7 +51,11 @@ public class TouristTicket extends BookingTicket {
     }
 
     public ArrayList<String> getSelectedLocations(){
-        return super.selectedLocations;
+        return selectedLocations;
+    }
+
+    public String getTypeOfTicket(){
+        return typeOfTicket;
     }
 
     public String getHotelAddress(){

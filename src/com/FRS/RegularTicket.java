@@ -1,7 +1,5 @@
 package com.FRS;
 
-import java.util.ArrayList;
-
 public class RegularTicket extends BookingTicket {
 
 
@@ -25,7 +23,8 @@ public class RegularTicket extends BookingTicket {
         super.departureLocation = departureLocation;
         super.destinationLocation = destinationLocation;
         specialServices = new SpecialServiceRequest(food, water, snacks);
-        super.validateOriginAndDestination();
+        validateOriginAndDestination();
+        typeOfTicket = "Regular Ticket";
 
         if(departureLocation.equals("Australia") || departureLocation.equals("New Zealand") || departureLocation.equals("Singapore"))
             super.flightNumber = flightDetails.getFlightNumber()[0];
@@ -41,9 +40,8 @@ public class RegularTicket extends BookingTicket {
         return super.destinationLocation;
     }
 
-    public ArrayList<String> getSelectedLocations(){
-        super.selectedLocations.clear();
-        return selectedLocations;
+    public String getTypeOfTicket(){
+        return typeOfTicket;
     }
 
 }
