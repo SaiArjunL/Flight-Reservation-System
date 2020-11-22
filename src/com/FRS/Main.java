@@ -15,7 +15,7 @@ public class Main {
 //        Departure Date and Time of Flight (I made this common for all Flights)
         LocalDateTime arrivalDateAndTime1 = LocalDateTime.of(2021, 1, 12, 12, 50);
 
-        LocalDateTime arrivalDateAndTime2 = LocalDateTime.of(2021, 1, 12, 12, 50);
+        LocalDateTime arrivalDateAndTime2 = LocalDateTime.of(2021, 1, 30, 5, 20);
 
 
 //        Flight Available Locations
