@@ -6,13 +6,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        Departure Date and Time of Flight (I made this common for all Flights)
+//        Departure Date and Time of Flight
         LocalDateTime departureDateAndTime1 = LocalDateTime.of(2021, 1, 12, 10, 35);
 
         LocalDateTime departureDateAndTime2 = LocalDateTime.of(2021, 1, 24, 18, 5);
 
 
-//        Departure Date and Time of Flight (I made this common for all Flights)
+//        Departure Date and Time of Flight
         LocalDateTime arrivalDateAndTime1 = LocalDateTime.of(2021, 1, 12, 12, 50);
 
         LocalDateTime arrivalDateAndTime2 = LocalDateTime.of(2021, 1, 30, 5, 20);
@@ -98,6 +98,7 @@ public class Main {
             System.out.println("Duration of Journey: " + ticket.getDuration() + "\n");
             System.out.println("PNR Number: " + ticket.getPNRNumber());
             System.out.println("Your Seat: " + ticket.getSeatNumber());
+//            Ticket Price is generated randomly (I made it random)
             System.out.println("Ticket Status: " + ticket.getStatus());
             System.out.println("Ticket Price: ₹ " + ticket.getTicketPrice());
             System.out.println("\n**********HAPPY JOURNEY**********\n");
@@ -119,6 +120,7 @@ public class Main {
             System.out.println("\nPNR Number: " + ticket.getPNRNumber());
             System.out.println("Your Seat Number is: " + ticket.getSeatNumber());
             System.out.println("Ticket Status: " + ticket.getStatus());
+//            Ticket Price is generated randomly (I made it random)
             System.out.println("Ticket Price: ₹ " + ticket.getTicketPrice());
             System.out.println("\n**********HAPPY JOURNEY**********");
         }
