@@ -3,6 +3,8 @@ import java.time.Duration;
 
 public abstract class BookingTicket {
 
+    private static int ticketCounter;
+    private final int ticketsBooked;
     private long PNRNumber;
     protected String departureLocation;
     protected String destinationLocation;
@@ -28,6 +30,7 @@ public abstract class BookingTicket {
 
 
     public BookingTicket(Flight flightDetails, PassengerRegistration passengerDetails, SeatMap seatMap){
+        this.ticketsBooked = ticketCounter++;
         this.flightDetails = flightDetails;
         this.passengerDetails = passengerDetails;
         this.seatMap = seatMap;
@@ -88,7 +91,7 @@ public abstract class BookingTicket {
             updateStatus(TicketStatus.CONFIRMED);
 
             float temp = this.passengerDetails.checkDue()
-                    - flightDetails.getTicketPrice() * passengerDetails.getPassengerCount();
+                    - flightDetails.getTicketPrice();
 
             this.passengerDetails.setCredit(temp);
         }
@@ -143,6 +146,10 @@ public abstract class BookingTicket {
 
     public int getFlightNumber(){
         return this.flightNumber;
+    }
+
+    public int getTicketsBooked(){
+        return this.ticketsBooked;
     }
 
 }

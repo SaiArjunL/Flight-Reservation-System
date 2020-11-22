@@ -6,43 +6,71 @@ public class Main {
 
     public static void main(String[] args) {
 
-        LocalDateTime departureDateAndTime = LocalDateTime.of(2021, 1, 12, 10, 35);
+//        Departure Date and Time of Flight (I made this common for all Flights)
+        LocalDateTime departureDateAndTime1 = LocalDateTime.of(2021, 1, 12, 10, 35);
 
-        LocalDateTime arrivalDateAndTime = LocalDateTime.of(2021, 1, 12, 12, 50);
+        LocalDateTime departureDateAndTime2 = LocalDateTime.of(2021, 1, 24, 18, 5);
 
 
+//        Departure Date and Time of Flight (I made this common for all Flights)
+        LocalDateTime arrivalDateAndTime1 = LocalDateTime.of(2021, 1, 12, 12, 50);
+
+        LocalDateTime arrivalDateAndTime2 = LocalDateTime.of(2021, 1, 12, 12, 50);
+
+
+//        Flight Available Locations
+//        These are used for Tourist locations also
         String[] locations = {"India", "Australia", "New Zealand", "Andaman and Nicobar Islands", "Singapore", "Switzerland"};
 
+//        Flight Numbers
         int[] flightNumbers = {1001, 1002};
 
+//        Setting the Flight constructor
+        Flight flight1 = new Flight(2, flightNumbers, locations, departureDateAndTime1, locations, arrivalDateAndTime1);
 
-        Flight flight = new Flight(2, flightNumbers, locations, departureDateAndTime, locations, arrivalDateAndTime);
+        Flight flight2 = new Flight(2, flightNumbers, locations, departureDateAndTime2, locations, arrivalDateAndTime2);
 
-        SeatMap seatMap = new SeatMap(50);
+//        Setting the SeatMap constructor with Number of Seats
+//        Number of Seats should be at least 10
+//        Number of Seats are divided into Rows and Columns
+//        Number of Seats = Number of Rows * Number of Columns
+//        For every one Column there are 10 Rows
+        SeatMap seatMap1 = new SeatMap(50);
 
+        SeatMap seatMap2 = new SeatMap(100);
 
-        PassengerRegistration passenger = new PassengerRegistration("Periyar Street", "Chennai",
+//        Setting the Passenger constructor with Passenger details
+        PassengerRegistration passenger1 = new PassengerRegistration("Periyar Street", "Chennai",
                 "Tamil Nadu", "Ladeela Sai Arjun", "8639953455",
-                "lsaarjun@gmail.com", 10000);
+                "saiarjun@gmail.com", 10000);
 
-        printPassengerDetails(passenger);
-        printWalletAmount(passenger);
+        PassengerRegistration passenger2 = new PassengerRegistration("A.P.H.B. Colony", "Anantapur",
+                "Andhra Pradesh", "Chinna", "9491369257",
+                "chinna@gmail.com", 25000);
 
-        RegularTicket bookingTicket1 = bookRegularTicket(flight, passenger, seatMap);
-        printRegularTicketDetails(bookingTicket1);
-//        printTicketDetails(bookingTicket1);
-        printWalletAmount(passenger);
-        System.out.println();
-        TouristTicket bookingTicket2 = bookTouristTicket(flight, passenger, seatMap);
-        printTouristTicketDetails(bookingTicket2);
-//        printTicketDetails(bookingTicket2);
-        printWalletAmount(passenger);
-        cancelTicket(bookingTicket1);
-        printWalletAmount(passenger);
+//        Prints Passenger Details
+        printPassengerDetails(passenger1);
+//        System.out.println();
+//        printPassengerDetails(passenger2);
 
+//        Prints Passenger Wallet Amount
+//        Passenger Wallet Amount is provided in Passenger constructor
+        printWalletAmount(passenger1);
+//        printWalletAmount(passenger2);
+
+//        This method books a Regular Ticket and displays the Ticket details in the output
+        generateRegularTicket(flight1, passenger1, seatMap1);
+//        System.out.println();
+//        This method books a Tourist Ticket and displays the Ticket details in the output
+//        generateTouristTicket(flight2, passenger2, seatMap2);
+
+//        printTicketDetails(bookRegularTicket(flight, passenger,seatMap));
+        printWalletAmount(passenger1);
+//        printWalletAmount(passenger2);
     }
 
     public static void printTicketDetails(BookingTicket ticket){
+//        A Random 6 digit PNR Number is printed for the Ticket booked (I made it to generate randomly)
         System.out.println("PNR Number is: " + ticket.getPNRNumber());
     }
 
@@ -98,8 +126,9 @@ public class Main {
 
     public static RegularTicket bookRegularTicket(Flight flight, PassengerRegistration passenger, SeatMap seatMap){
 
-        return new RegularTicket(flight, passenger, seatMap,"Australia", "New Zealand",
+       return  new RegularTicket(flight, passenger, seatMap,"Australia", "New Zealand",
                 true, true, true);
+
     }
 
     public static TouristTicket bookTouristTicket(Flight flight, PassengerRegistration passenger, SeatMap seatMap){
@@ -111,5 +140,27 @@ public class Main {
     public static void cancelTicket(BookingTicket ticket){
         ticket.cancelTicket();
         System.out.println("YOUR " + ticket.getTypeOfTicket().toUpperCase() + " HAS BEEN "+ ticket.getStatus() +"!!!!");
+    }
+
+    public static void generateRegularTicket(Flight flight, PassengerRegistration passenger, SeatMap seatMap){
+
+        if(seatMap.getAvailableSeats() > 0) {
+            RegularTicket bookingTicket1 = bookRegularTicket(flight, passenger, seatMap);
+            printRegularTicketDetails(bookingTicket1);
+        }
+        else
+            System.out.println("Seats are not available!!!!");
+
+    }
+
+    public static void generateTouristTicket(Flight flight, PassengerRegistration passenger, SeatMap seatMap){
+
+        if(seatMap.getAvailableSeats() > 0) {
+            TouristTicket bookingTicket2 = bookTouristTicket(flight, passenger, seatMap);
+            printTouristTicketDetails(bookingTicket2);
+        }
+        else
+            System.out.println("Seats are not available!!!!");
+
     }
 }

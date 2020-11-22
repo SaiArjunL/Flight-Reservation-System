@@ -51,7 +51,7 @@ public class Flight {
 
     public void getSeatDetails(SeatMap seatDetails) {
         System.out.println("Total Number of seats: " + seatDetails.getTotalNumberOfSeats());
-        seatDetails.generateSeatNumber();
+        seatDetails.getSeatNumber();
         System.out.println("Remaining Available Seats: " + seatDetails.getAvailableSeats() + "\n");
     }
 

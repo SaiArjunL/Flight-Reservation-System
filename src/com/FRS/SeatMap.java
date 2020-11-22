@@ -26,7 +26,7 @@ public class SeatMap {
         return this.totalNumberOfSeats;
     }
 
-    public void generateSeatNumber(){
+    private void generateSeatNumber(){
 
         String temp1 = Integer.toString(getRandomRow( this.totalNumberOfSeats / (this.totalNumberOfSeats / 10)));
         String temp2 = String.valueOf(getRandomColumn(totalNumberOfSeats / 10));
@@ -57,5 +57,6 @@ public class SeatMap {
         generateSeatNumber();
         return this.seatNumber;
     }
+
 
 }

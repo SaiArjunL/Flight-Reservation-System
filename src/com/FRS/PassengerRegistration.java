@@ -61,7 +61,6 @@ public class PassengerRegistration {
     }
 
     public float checkDue(){
-
         return (float)Math.floor((this.credit * 100) / 100);
     }
 
