@@ -49,12 +49,6 @@ public class Flight {
         return dateAndTimeOfArrival.format(formatter);
     }
 
-    public void getSeatDetails(SeatMap seatDetails) {
-        System.out.println("Total Number of seats: " + seatDetails.getTotalNumberOfSeats());
-        seatDetails.getSeatNumber();
-        System.out.println("Remaining Available Seats: " + seatDetails.getAvailableSeats() + "\n");
-    }
-
     public String[] getOrigin(){
         return this.origin;
     }
@@ -62,6 +56,5 @@ public class Flight {
     public String[] getDestination(){
         return this.destination;
     }
-
-
+    
 }
