@@ -120,7 +120,7 @@ public class Main {
             System.out.println("\nPNR Number: " + ticket.getPNRNumber());
             System.out.println("Your Seat Number is: " + ticket.getSeatNumber());
             System.out.println("Ticket Status: " + ticket.getStatus());
-//            Ticket Price is generated randomly (I made it random)
+//            Ticket Price is generated randomly (Rs.2000 to Rs.5000) (I made it random)
             System.out.println("Ticket Price: ₹ " + ticket.getTicketPrice());
             System.out.println("\n**********HAPPY JOURNEY**********");
         }
